@@ -104,7 +104,7 @@ function addImg(src) {
 }
 //获取每张图片的比例
 for(var i=0;i<img.length;i++){
-    img[i].scale = addImg(img[i].src).offHeight/addImg(img[i].src).offWidth;
+    img[i].scale = addImg(img[i].src).height/addImg(img[i].src).width;
     console.log(img[i].scale);
 }
 //将其加载至div的子元素后
