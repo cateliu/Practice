@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div{
+            background-color: #ffe;
+            margin-bottom: 20px;
+        }
+        main{
+            margin: 40px 50px 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+        <div class="section"></div>
+    </main>
+</body>
+<script type="text/javascript">
+var Height = [250, 300, 270, 280, 290, 312, 276, 282];
+var section = document.getElementsByClassName('section');
+//给每一行设置不同的高度
+for (var i = 0; i < section.length; i++) {
+    section[i].setAttribute("style", 'height:'+Height[parseInt(Math.random() * 10 % 7)] + 'px');
+}
+
+var img = [{
+    src: "images/1.jpg"
+}, {
+    src: "images/2.jpg"
+}, {
+    src: "images/3.jpg"
+}, {
+    src: "images/4.jpg"
+}, {
+    src: "images/5.jpg"
+}, {
+    src: "images/6.jpg"
+}, {
+    src: "images/7.jpg"
+}, {
+    src: "images/8.jpg"
+}, {
+    src: "images/9.jpg"
+}, {
+    src: "images/10.jpg"
+}, {
+    src: "images/11.jpg"
+}, {
+    src: "images/12.jpg"
+}, {
+    src: "images/13.jpg"
+}, {
+    src: "images/14.jpg"
+}, {
+    src: "images/15.jpg"
+}, {
+    src: "images/16.jpg"
+}, {
+    src: "images/17.jpg"
+}, {
+    src: "images/18.jpg"
+}, {
+    src: "images/19.jpg"
+}]
+
+
+</script>
+
+</html>

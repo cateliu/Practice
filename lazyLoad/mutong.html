@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript">var imgs = [   
+    {"src": "images/task45_1.jpg", flag: 0},  
+    {"src": "images/task45_2.jpg", flag: 0},  
+    {"src": "images/task45_3.jpg", flag: 0},  
+    {"src": "images/task45_4.jpg", flag: 0},  
+    {"src": "images/task45_5.jpg", flag: 0},  
+    {"src": "images/task45_6.jpg", flag: 0},  
+    {"src": "images/task45_7.jpg", flag: 0},  
+    {"src": "images/task45_8.jpg", flag: 0},  
+    {"src": "images/task45_9.jpg", flag: 0},  
+    {"src": "images/task45_10.jpg", flag: 0},  
+    {"src": "images/task45_11.jpg", flag: 0},  
+    {"src": "images/task45_12.jpg", flag: 0}  
+];  
+window.onload = function() {  
+    var container = document.getElementById("container");  
+    var width = container.offsetWidth;  
+    for (var i = 0; i < imgs.length; i++) {   
+        var img = new Image();  
+        img.src = imgs[i].src;  
+        imgs[i].ratio = parseFloat(img.width) / parseFloat(img.height);  
+    }  
+    var begin = 0;   
+    var totalHeight = 0;   
+    var rows = 0;    
+    var flag = true;  
+    while(flag) {   
+        var count = 0;  
+        var number = 0;  
+        for (var j = 0; j < imgs.length; j++) {   
+            if (imgs[j].flag == 0 && count + imgs[j].ratio < 6) {   
+                number++;  
+                var image = document.createElement("img");  
+                image.setAttribute("src", imgs[j].src);  
+                container.appendChild(image);  
+                count += imgs[j].ratio;  
+                imgs[j].flag = 1;  
+            }  
+        }  
+        rows++;  
+        if (begin + number != imgs.length) {  
+            height = parseFloat(width) / count;  
+            totalHeight += height;  
+            var images = document.getElementsByTagName("img");  
+            var totalWidth = 0;  
+            for (var j = begin; j < begin + number - 1; j++) {   
+                images[j].style.height = height + 'px';  
+                images[j].style.width = height * imgs[images[j].getAttribute("src").slice(14, -4) - '0' - 1].ratio + "px";  
+                totalWidth += parseFloat(images[j].style.width);  
+            }  
+            images[begin + number - 1].style.height = height + 'px';  
+            images[begin + number - 1].style.width = parseFloat(width) - totalWidth + "px";  
+        }  
+        else {  
+            height = totalHeight / (rows - 1);   
+            for (var j = begin; j < begin + number; j++) {   
+                images[j].style.height = height + 'px';  
+                images[j].style.width = height * imgs[images[j].getAttribute("src").slice(14, -4) - '0' - 1].ratio + "px";  
+            }  
+            flag = false;  
+        }  
+        begin = begin + number;   
+    }  
+};  </script>
+</body>
+</html>
