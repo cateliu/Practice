@@ -83,6 +83,26 @@ var imgDate = [{
         src: "images/18.jpg",
     }, {
         src: "images/19.jpg",
+    }, {
+        src: "images/21.jpg",
+    }, {
+        src: "images/22.jpg",
+    }, {
+        src: "images/23.jpg",
+    }, {
+        src: "images/24.jpg",
+    }, {
+        src: "images/25.jpg",
+    }, {
+        src: "images/26.jpg",
+    }, {
+        src: "images/27.jpg",
+    }, {
+        src: "images/28.jpg",
+    }, {
+        src: "images/29.jpg",
+    }, {
+        src: "images/30.jpg",
     }
     ]
     //添加img元素
@@ -131,13 +151,15 @@ function render(imgInfo, num) {
             creatRow(rowHeight);
             imglist = [];
             imglist.push(imgInfo);
-            return;
         }
-        // else if (num === imgDate.length) { //当图片是最后一张时
-        //     rowHeight = minHeight * rowMaxWidth / rowWidth;
-        //     creatRow(rowHeight);
-        // }
+        
     }
+     if (num === imgDate.length) { //当图片是最后一张时
+        rowWidth = 0;
+        for(var i=0;i<imglist.length;i++){rowWidth+=imglist[i].width;}
+            rowHeight = minHeight * rowMaxWidth / rowWidth;
+            creatRow(rowHeight);
+        }
 
 }
 
