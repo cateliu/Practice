@@ -9,19 +9,21 @@
         padding: 0;
         margin: 0px;
     }
-
+    
     div {
         background-color: #fff;
         margin-bottom: 20px;
         position: static;
     }
     
-    img{
-/*         padding: 10px; */
-margin-right: 10px;
+    img {
+        /*         padding: 10px; */
         box-sizing: border-box;
+        /*         margin-right: 10px;
+ */
         float: left;
     }
+    
     main {
         margin: 40px auto 40px;
         width: 1200px;
@@ -35,7 +37,18 @@ margin-right: 10px;
     
     .img {
         width: 30%;
-
+    }
+    
+    .arearOfImg {
+        width: 100%;
+        height: 500px;
+        background-color: black;
+        display: flex;
+    }
+    
+    .ImgInArea {
+        position: absolute;
+        align-items: center;
     }
     </style>
 </head>
@@ -95,7 +108,7 @@ var imgDate = [{
     }, {
         src: "images/24.jpg",
     }, {
-        src: "images/25.jpg",
+        src: "images/31.png",
     }, {
         src: "images/26.jpg",
     }, {
@@ -105,32 +118,34 @@ var imgDate = [{
     }, {
         src: "images/29.jpg",
     }, {
-        src: "images/30.jpg",
-    }
-    ]
+        src: "images/30.ico"
+    }, {
+        src: "images/25.jpg"
+    }]
     //添加img元素
-        var num = 1;
+var num = 1;
+
 function creatImg(src) {
     var img = new Image();
 
     img.src = src;
-
     //图片加载后，执行函数
     img.onload = function() {
         var _this = this;
         var ImgWIdth = img.width,
             ImgHeight = img.height,
             scale = ImgWIdth / ImgHeight;
-        
+            console.log(this.src)
         imgInfo = {
             a: _this,
             width: minHeight * scale,
             height: minHeight
         }
-
+        this.addEventListener('click', function() {
+            fangda.zoom(this);
+        })
         render(imgInfo, num);
-
-        num+=1;
+        num += 1;
     }
 }
 
@@ -139,31 +154,35 @@ function render(imgInfo, num) {
         rowMaxWidth = 1200, //获取父元素的宽度
         rowHeight = 0;
     imglist.push(imgInfo);
-    console.log(num);
     /*
     每张图片的宽度相加，如果大于最大宽度，则删除最后一张图片，并将其存入清空的imgList数组中
     对于刚好比最大宽度小的一组照片，计算总宽度，等比放大得到row的高度rowHeight
     此时创建新的行，高度为计算所得的rowHeight
     */
     for (var i = 0; i < imglist.length; i++) {
-        rowWidth += imglist[i].width+10;
+        rowWidth += (imglist[i].width);
+        if (imglist.length === 1 && imglist[i].width > rowMaxWidth) {
+            rowHeight = minHeight * rowMaxWidth / imglist[i].width;
+            creatRow(rowHeight);
+            break;
+        }
         if (rowWidth > rowMaxWidth) {
             imglist.pop();
-            rowWidth -= imgInfo.width+10;
-            rowHeight = minHeight * rowMaxWidth / rowWidth;
+            rowWidth -= imgInfo.width;
+            rowHeight = minHeight * rowMaxWidth / (rowWidth);
             creatRow(rowHeight);
             imglist = [];
             imglist.push(imgInfo);
         }
-        
     }
-     if (num === imgDate.length) { //当图片是最后一张时
+    if (num === imgDate.length) { //当图片是最后一张时
         rowWidth = 0;
-        for(var i=0;i<imglist.length;i++){rowWidth+=imglist[i].width;}
-            rowHeight = minHeight * rowMaxWidth / rowWidth;
-            creatRow(rowHeight);
+        for (var i = 0; i < imglist.length; i++) {
+            rowWidth += imglist[i].width;
         }
-
+        rowHeight = minHeight * rowMaxWidth / (rowWidth);
+        creatRow(rowHeight);
+    }
 }
 
 function creatRow(height) {
@@ -172,13 +191,34 @@ function creatRow(height) {
     for (var i = 0; i < imglist.length; i++) {
         var image = imglist[i].a;
         image.setAttribute('style', 'height:' + height + 'px');
-        div.insertAdjacentElement('beforeEnd',image);
+        div.insertAdjacentElement('beforeEnd', image);
     }
-    father.insertAdjacentElement('beforeEnd',div);
+    father.insertAdjacentElement('beforeEnd', div);
 }
 //创建所有的图片
 for (var i = 0; i < imgDate.length; i++) {
     creatImg(imgDate[i].src);
+}
+
+var imgAplify = document.createElement('img');
+var areaOfImg = document.createElement('div');
+areaOfImg.setAttribute('class', 'arearOfImg');
+imgAplify.setAttribute('class', 'ImgInArea');
+areaOfImg.append(imgAplify);
+var fangda = {
+    nodeOfName: "",
+    zoom: function(img_this) {
+        if (img_this === this.nodeOfName) {
+            img_this.parentNode.parentNode.removeChild(areaOfImg);
+            this.nodeOfName = "";
+        } else if (img_this.parentNode === this.nodeOfName.parentNode) {
+            imgAplify.setAttribute('src', img_this.src);
+        } else {
+            img_this.parentNode.insertAdjacentElement('afterEnd', areaOfImg);
+            this.nodeOfName = img_this;
+        }
+    }
+
 }
 </script>
 
